@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Roboto:wght@100;300&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins";
+    height: 100vh;
+    background-image: linear-gradient(260deg, rgb(81, 96, 149) 2%, rgb(34, 49, 102) 60%);
+    background: url(images/bgimg.jpg);
+}
+form{
+    position: fixed;
+    background-image: linear-gradient(260deg, rgb(197, 118, 79) 2%, rgb(5, 74, 63) 60%, rgb(65, 91, 9) 80%);
+    justify-content:end;
+    display: flex;
+    width: 100%;
+    height: 10vh;
+    justify-content: space-between;
+}
+#TilesContainer {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+#username {
+    border: 2px solid grey;
+    border-radius: 15px;
+    height: 60px;
+    width: 30%;
+    margin: 10px;
+    color: white;
+    background: rgba(50, 78, 78, 0.7);
+    font-size:x-large;
+    /* border: 2px solid red; */
+    margin-left: auto;
+    
+}
+
+#search {
+    border: none;
+    border-radius: 15px;
+    height: 60px;
+    width: 12%;
+    margin: 10px;
+    color: white;
+    background: rgba(2, 48, 48, 0.7);
+    font-size: 33px;
+    /* border: 2px solid red; */
+}
+
+.card {
+    background-image: linear-gradient(300deg, rgb(86, 7, 131) 2%, rgb(57, 53, 164) 90%);
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgb(152, 58, 58), 0 4px 12px rgb(0, 0, 0, 0.3);
+    display: flex;
+    padding: 3rem;
+    /* width: 500px; */
+    margin-top: 2%;
+    cursor: pointer;
+    margin-top: 100px;
+    /* border: 6px solid rgb(26, 3, 3); */
+}
+
+.avatar {
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+}
+
+.user-info {
+    color: #eee;
+    margin-left: 2rem;
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info h2 {
+    margin-bottom: 40px;
+    /* border: 2px solid rgb(19, 7, 7); */
+}
+
+.user-info ul {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    max-width: 400px;
+    /* border: 2px solid rgb(192, 205, 195); */
+    display: flex;
+    flex-direction: column;
+}
+
+#navhead {
+    color: white;
+    text-align: left;
+}
+#user-name{
+    margin-top: 20px;
+    color: white;
+    font-weight: 700;
+    font-size: xx-large;
+    /* border: 2px solid rgb(38, 12, 12); */
+    height: 100%;
+}

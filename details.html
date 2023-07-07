@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIT USER DETAILS</title>
+   <!-- <link rel="stylesheet" href="details_style.css"> -->
+   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&family=Roboto:wght@100;300&display=swap');
+
+*{
+    box-sizing: border-box;
+}
+body{
+    font-family: "Poppins";
+    background-color: rgb(11, 11, 11);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-image: linear-gradient(260deg,rgb(81, 96, 149) 2%, rgb(34, 49, 102) 60%);
+    margin: 0;
+    background: url(images/bgimg.jpg);
+    color: white;
+}
+.card{
+    background-color: rgb(115, 113, 165);
+    background-image: linear-gradient(300deg,rgb(86, 7, 131) 2%, rgb(57, 53, 164) 90%);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgb(152, 58, 58),0 4px 12px rgb(0, 0, 0,0.3) ;
+    display: flex;
+    max-width: 750px;
+    margin-top: 2%;
+    width: 700px;
+    /* border: 2px solid red; */
+}
+
+.avatar{
+    border: 5px solid rgb(26, 3, 3);
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+}
+.user-info{
+    color: #eee;
+    width: 70%;
+    /* border: 2px solid white; */
+    margin: 30px;
+   
+}
+.user-info a{
+    text-decoration: none;
+    color: white;
+}
+.user-info h2{
+    margin-top:0;
+
+
+}
+.user-info ul{
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    max-width: 400px;
+}
+
+.user-info ul li b{
+    margin-left: 0.5rem;
+}
+
+.repo{
+    
+    border-radius: 4px;
+    background-color: rgb(107, 161, 208);
+    font-size:18px;
+    margin-right: 0.5rem;
+    text-decoration: none;
+    color: #161515;
+    padding: 0.25rem 0.6rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    height: 50px;
+    font-weight:800;
+    align-items: center;
+    
+
+    /* border: 2px solid red; */
+}
+#repoHead{
+    font-size: 35px;
+    text-align:center;
+}
+.repo a{
+    text-decoration: none;
+}
+#repos {
+    width:60%;
+    
+}
+
+.imgdiv{
+    width: 30%;
+    /* border: 2px solid black; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#view{
+    margin-top: 25px;
+    height: 50px; 
+    width: 150px;
+    border: none;
+    border-radius: 5px;
+    font-size: large;
+    font-weight: 600;
+    background-color: rgb(131, 122, 160);
+    color: rgb(50, 41, 41);
+    margin-left: 22%;
+    cursor: pointer;
+    
+}
+
+   </style>
+</head>
+<body>
+    <div id="userDetailsContainer"></div>
+
+    <h1 id="repoHead">REPOSITORIES</h1>
+    <div id="repos"></div>
+
+    <script>
+        const userDetailsContainer = document.getElementById('userDetailsContainer');
+const reposContainer = document.getElementById('repos');
+
+function repo(name) {
+    const url = window.location.search.substr(1);
+    const repolink = url.split('&');
+
+    for (let i = 0; i < repolink.length; i++) {
+        const repository = repolink[i].split('=');
+        if (repository[0] === name) {
+            return repository[1];
+        }
+    }
+    return null;
+}
+
+async function fetchUserDetails() {
+    const username = repo('username');
+
+    try {
+        const userDetailsResponse = await fetch(`https://api.github.com/users/${username}`);
+        const userDetails = await userDetailsResponse.json();
+        console.log(userDetails);
+
+        const userDetailsHTML = createUserDetailsHTML(userDetails);
+        userDetailsContainer.innerHTML = userDetailsHTML;
+
+        const reposResponse = await fetch(`https://api.github.com/users/${username}/repos?sort=stargazers_count&direction=desc`);
+        const repos = await reposResponse.json();
+        console.log(repos);
+
+        const topRepos = repos.slice(0, 5);
+        const reposHTML = topRepos.map(repo => createRepoHTML(repo));
+        reposContainer.innerHTML = reposHTML.join('');
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function createUserDetailsHTML(user) {
+const userDetailsHTML = `
+<div class="card">
+    <div class="imgdiv">
+        <img src="${user.avatar_url}" alt="${user.name}" class="avatar"/>
+    </div>
+    <div class="user-info">
+        <h2>${user.name}</h2>
+        <p>${user.bio}</p>
+        <ul class="info">
+            <li>${user.followers}<b>Follower</b></li>
+            <li>${user.following}<b>Following</b></li>
+            <li>${user.public_repos}<b>Repos</b></li>
+        </ul>
+        <button id="view"><a href="${`https://github.com/${user.login}`}">View Profile</a></button>
+    </div>
+</div>
+`;
+const headingText = user.login === "malayadaniGIT" ? "My GitHub Profile" : "";
+const headingHTML = headingText ? `<h2>${headingText}</h2>` : "";
+
+return headingHTML + userDetailsHTML;
+}
+function createRepoHTML(repo) {
+    const repoHTML = `
+        <div class="repo">
+            <a href="${repo.html_url}" class="repo-link">${repo.name}</a>
+          
+        </div>
+    `;
+
+    return repoHTML;
+}
+fetchUserDetails();
+    </script>
+    <!-- <script src="details_script.js"></script> -->
+</body>
+</html>
